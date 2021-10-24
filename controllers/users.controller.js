@@ -55,6 +55,7 @@ module.exports.login = (req, res, next) => {
       next(createError(400, { errors: validations }))
     } else {
       req.login(user, error => {
+        console.log('USER', user)
         if (error) next(error)
         else res.json(user)
       })

@@ -5,17 +5,17 @@ const mongoose = require('mongoose');
 const MongoStore = connectMongo(expressSession);
 
 const session = expressSession({
-  secret: 'super secret (change it)',
+  secret: process.env.SESSION_SECRET || 'super secret (change it)',
   saveUninitialized: false,
   resave: false,
   cookie: {
-    secure: false,
+    secure: process.env.SESSION_SECURE || false,
     httpOnly: true,
-    maxAge: 3600000,
+    maxAge: process.env.SESSION_MAX_AGE || 3600000,
   },
   store: new MongoStore({
     mongooseConnection: mongoose.connection,
-    ttl: 3600,
+    ttl: process.env.SESSION_MAX_AGE || 3600,
   })
 });
 
